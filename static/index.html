@@ -42,7 +42,7 @@ function sendJSONXMLHTTPRequest(url, objects, callback) {
                     //XXX: Pass the data to the callback!
                     try {
                         response = JSON.parse(xhr.responseText);
-                        callback();
+                        callback(response);
                     } catch(e) {
                         alert('Error: ' + e + xhr.responseText);
                     }
