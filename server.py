@@ -89,7 +89,13 @@ def update(entity):
 
 @app.route("/world", methods=['POST','GET'])    
 def world():
-    return json.dumps(myWorld.world())
+    if request.method == 'GET':
+        return json.dumps(myWorld.world())
+    if request.method == 'POST':
+        data = flask_post_json()
+        for key, value in data.iteritems():
+            myWorld.set(key, value)
+        return json.dumps(myWorld.world())
 
 @app.route("/entity/<entity>")    
 def get_entity(entity):
@@ -99,7 +105,7 @@ def get_entity(entity):
 @app.route("/clear", methods=['POST','GET'])
 def clear():
     myWorld.clear()
-    return ('', 200)
+    return json.dumps(myWorld.world())
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
